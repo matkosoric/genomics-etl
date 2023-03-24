@@ -19,7 +19,7 @@ terraform {
   backend "azurerm" {
     resource_group_name  = "ALLGDP"
     storage_account_name = "genomicsetl"
-    container_name       = "genomics-etl-terraform-state"
+    container_name       = "genomics-etl-2-terraform-state"
     key                  = "terraform.tfstate"
   }
 
