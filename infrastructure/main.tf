@@ -12,7 +12,7 @@ module "adf" {
   azurerm_key_vault_id            = module.key_vault.keyvault_id
   #  service_principal_id            = var.service_principal_object_id
   subscription_id                 = var.subscription_id
-#  illumina_sas_token_secret_name  = module.key_vault.illumina_dataset_sas_token
+  #  illumina_sas_token_secret_name  = module.key_vault.illumina_dataset_sas_token
 }
 
 module "postgres" {
@@ -53,14 +53,17 @@ module "databricks" {
   region         = var.region
   resource_group = var.resource_group_name
 
-  client_id             = var.service_principal_id
-  client_secret         = var.client_secret
-  tenant_id             = var.tenant_id
-  subscription_id       = var.subscription_id
-  prefix                = local.project
-  tags                  = local.tags
-  databricks_admin_mail = var.databricks_admin_mail
-  current_aad_user_id   = var.current_aad_user_id
+  client_id                       = var.service_principal_id
+  client_secret                   = var.client_secret
+  tenant_id                       = var.tenant_id
+  subscription_id                 = var.subscription_id
+  prefix                          = local.project
+  tags                            = local.tags
+  databricks_admin_mail           = var.databricks_admin_mail
+  current_aad_user_id             = var.current_aad_user_id
+  container_name_landing_raw_data = module.adls.container_name_landing_raw_data
+  storage_account_name            = module.adls.storage_account_name
+  landing_container_sas_token     = module.adls.landing_container_sas_token
 }
 
 

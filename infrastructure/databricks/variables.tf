@@ -38,4 +38,15 @@ variable "current_aad_user_id" {
   type = string
 }
 
+variable "container_name_landing_raw_data" {
+  type = string
+}
+
+variable "storage_account_name" {
+  type = string
+}
+
+variable "landing_container_sas_token" {
+  type = string
+}
 

@@ -67,3 +67,30 @@ data "azurerm_storage_account_sas" "adls_sas_token" {
   }
 }
 
+
+
+
+data "azurerm_storage_account_blob_container_sas" "landing_container_sas_token" {
+  connection_string = azurerm_storage_account.genomics_etl_data.primary_connection_string
+  container_name    = azurerm_storage_container.genomics_etl_data_landing.name
+  https_only        = true
+
+  start  = "2023-03-01"
+  expiry = "2023-04-01"
+
+  permissions {
+    read   = true
+    add    = true
+    create = true
+    write  = true
+    delete = true
+    list   = true
+  }
+
+  cache_control       = "max-age=5"
+  content_disposition = "inline"
+  content_encoding    = "deflate"
+  content_language    = "en-US"
+  content_type        = "application/json"
+}
+

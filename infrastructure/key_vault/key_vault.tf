@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "genomics_etl_key_vault" {
-  name                        = "${var.project}-kv-${var.environment}"
+  name                        = "${var.project}-kv-${var.environment}-2"
   location                    = var.location
   resource_group_name         = var.resource_group_name
   enabled_for_disk_encryption = true
