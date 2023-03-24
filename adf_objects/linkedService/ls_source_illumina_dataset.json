@@ -1,7 +1,7 @@
 {
 	"name": "ls_source_illumina_dataset",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
+		"description": "a",
 		"annotations": [],
 		"type": "AzureBlobStorage",
 		"typeProperties": {
@@ -11,9 +11,9 @@
 					"referenceName": "ls_keyvault",
 					"type": "LinkedServiceReference"
 				},
-				"secretName": "illumina-dataset-sas-uri"
+				"secretName": "genomics-etl-2-illumina-dataset-sas-uri-dev"
 			}
-		},
-		"description": "a"
-	}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }
