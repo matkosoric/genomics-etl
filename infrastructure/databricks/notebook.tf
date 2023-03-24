@@ -2,11 +2,6 @@ data "databricks_current_user" "me" {
   depends_on = [azurerm_databricks_workspace.db_workspace]
 }
 
-#data "databricks_spark_version" "latest" {
-#  long_term_support = true
-#  depends_on        = [azurerm_databricks_workspace.db_workspace]
-#}
-
 resource "databricks_notebook" "this" {
   path           = "${data.databricks_current_user.me.home}/Genomics-ETL"
   language       = "PYTHON"
@@ -29,21 +24,24 @@ resource "databricks_notebook" "this" {
                      extra_configs = config
                     )
 
+    # COMMAND ----------
+    dbutils.fs.ls("/mnt/1-landing-raw-data")
+
+    # COMMAND ----------
+    path ="/mnt/1-landing-raw-data/hg19/hybrid/hg19.hybrid.vcf.gz"
+    df = spark.read.format("vcf").load(path)
+
+    # COMMAND ----------
+    display(df)
+
+    # COMMAND ----------
+    mode = "overwrite"
+    url = "jdbc:postgresql://'${var.postgres_fqdn}':5432/postgres"
+    properties = {"user": "'${var.admin_username}'","password": "'${var.postgres_admin_password}'","driver": "org.postgresql.Driver"}
+
+    df.write.jdbc(url=url, table="hg19", mode=mode, properties=properties)
+
+
     EOT
   )
 }
-
-#resource "databricks_job" "this" {
-#  name = "Genomics (${data.databricks_current_user.me.alphanumeric})"
-#
-#  new_cluster {
-#    num_workers   = 1
-#    spark_version = data.databricks_spark_version.latest.id
-#    node_type_id  = data.databricks_node_type.smallest.id
-#  }
-#
-#  notebook_task {
-#    notebook_path = databricks_notebook.this.path
-#  }
-#}
-

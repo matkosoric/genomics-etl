@@ -50,3 +50,14 @@ variable "landing_container_sas_token" {
   type = string
 }
 
+variable "postgres_fqdn" {
+  type = string
+}
+
+variable "admin_username" {
+  type = string
+}
+
+variable "postgres_admin_password" {
+  type = string
+}

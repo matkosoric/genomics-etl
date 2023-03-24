@@ -64,6 +64,9 @@ module "databricks" {
   container_name_landing_raw_data = module.adls.container_name_landing_raw_data
   storage_account_name            = module.adls.storage_account_name
   landing_container_sas_token     = module.adls.landing_container_sas_token
+  postgres_fqdn                   = module.postgres.postgres_fqdn
+  admin_username                  = module.postgres.admin_username
+  postgres_admin_password         = module.postgres.postgres_admin_password
 }
 
 
