@@ -10,9 +10,7 @@ module "adf" {
   postgres_admin_conection_string = module.postgres.postgres_admin_conection_string
   adls_connection_string          = module.adls.adls_connection_string
   azurerm_key_vault_id            = module.key_vault.keyvault_id
-  #  service_principal_id            = var.service_principal_object_id
   subscription_id                 = var.subscription_id
-  #  illumina_sas_token_secret_name  = module.key_vault.illumina_dataset_sas_token
 }
 
 module "postgres" {

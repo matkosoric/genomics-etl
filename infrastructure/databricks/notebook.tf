@@ -36,8 +36,8 @@ resource "databricks_notebook" "this" {
 
     # COMMAND ----------
     mode = "overwrite"
-    url = "jdbc:postgresql://'${var.postgres_fqdn}':5432/postgres"
-    properties = {"user": "'${var.admin_username}'","password": "'${var.postgres_admin_password}'","driver": "org.postgresql.Driver"}
+    url = "jdbc:postgresql://${var.postgres_fqdn}:5432/postgres"
+    properties = {"user": "${var.admin_username}","password": "${var.postgres_admin_password}","driver": "org.postgresql.Driver"}
 
     df.write.jdbc(url=url, table="hg19", mode=mode, properties=properties)
 

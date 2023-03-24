@@ -93,14 +93,14 @@ resource "azurerm_user_assigned_identity" "keyvault_managed_identity" {
 }
 
 resource "azurerm_role_assignment" "keyvault_managed_identity_as_keyvault_admin" {
-  scope                = azurerm_key_vault.genomics_etl_key_vault.id   # var.azurerm_key_vault_id
+  scope                = azurerm_key_vault.genomics_etl_key_vault.id
   role_definition_name = "Key Vault Administrator"
   principal_id         = azurerm_user_assigned_identity.keyvault_managed_identity.principal_id
 }
 
 resource "azurerm_federated_identity_credential" "keyvault_managed_identity_credential" {
   name                = "keyvault_managed_identity_credential"
-  resource_group_name = var.resource_group_name #azurerm_resource_group.example.name
+  resource_group_name = var.resource_group_name
   audience            = ["foo"]
   issuer              = "https://foo"
   parent_id           = azurerm_user_assigned_identity.keyvault_managed_identity.id

@@ -30,18 +30,9 @@ variable "azurerm_key_vault_id" {
   type = string
 }
 
-#variable "service_principal_id" {
-#  type = string
-#}
-
 variable "subscription_id" {
   type = string
 }
-
-#variable "illumina_sas_token_secret_name" {
-#  type = string
-#}
-
 
 
 
