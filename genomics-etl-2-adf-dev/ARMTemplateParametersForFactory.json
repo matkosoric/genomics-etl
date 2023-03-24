@@ -1,0 +1,44 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "genomics-etl-2-adf-dev"
+		},
+		"ls_adls_properties_typeProperties_serviceEndpoint": {
+			"value": "https://genomicsetldev.blob.core.windows.net/"
+		},
+		"ls_keyvault_properties_typeProperties_baseUrl": {
+			"value": "https://genomics-etl-2-kv-dev-2.vault.azure.net/"
+		},
+		"ls_postgres_properties_typeProperties_connectionString_secretName": {
+			"value": "genomics-etl-2-postgres-admin-connection-string-dev"
+		},
+		"ls_source_illumina_dataset_properties_typeProperties_sasUri_secretName": {
+			"value": "genomics-etl-2-illumina-dataset-sas-uri-dev"
+		},
+		"adls_managed_private_endpoint_properties_privateLinkResourceId": {
+			"value": "/subscriptions/6d2e3a80-7b47-4bab-a829-b4f4e73a77f5/resourceGroups/ALLGDP/providers/Microsoft.Storage/storageAccounts/genomicsetldev"
+		},
+		"adls_managed_private_endpoint_properties_groupId": {
+			"value": "blob"
+		},
+		"adls_managed_private_endpoint_properties_fqdns": {
+			"value": [
+				"genomicsetldev.blob.core.windows.net"
+			]
+		},
+		"example_properties_privateLinkResourceId": {
+			"value": "/subscriptions/6d2e3a80-7b47-4bab-a829-b4f4e73a77f5/resourceGroups/ALLGDP/providers/Microsoft.KeyVault/vaults/genomics-etl-kv-dev-4"
+		},
+		"example_properties_groupId": {
+			"value": "blob"
+		},
+		"keyvault_managed_private_endpoint_properties_privateLinkResourceId": {
+			"value": "/subscriptions/6d2e3a80-7b47-4bab-a829-b4f4e73a77f5/resourceGroups/ALLGDP/providers/Microsoft.KeyVault/vaults/genomics-etl-kv-dev-4"
+		},
+		"keyvault_managed_private_endpoint_properties_groupId": {
+			"value": "kayvault"
+		}
+	}
+}

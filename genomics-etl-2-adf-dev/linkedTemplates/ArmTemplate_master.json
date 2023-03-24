@@ -1,0 +1,121 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "genomics-etl-2-adf-dev"
+		},
+		"ls_adls_properties_typeProperties_serviceEndpoint": {
+			"type": "string",
+			"defaultValue": "https://genomicsetldev.blob.core.windows.net/"
+		},
+		"ls_keyvault_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://genomics-etl-2-kv-dev-2.vault.azure.net/"
+		},
+		"ls_postgres_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "genomics-etl-2-postgres-admin-connection-string-dev"
+		},
+		"ls_source_illumina_dataset_properties_typeProperties_sasUri_secretName": {
+			"type": "string",
+			"defaultValue": "genomics-etl-2-illumina-dataset-sas-uri-dev"
+		},
+		"adls_managed_private_endpoint_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/6d2e3a80-7b47-4bab-a829-b4f4e73a77f5/resourceGroups/ALLGDP/providers/Microsoft.Storage/storageAccounts/genomicsetldev"
+		},
+		"adls_managed_private_endpoint_properties_groupId": {
+			"type": "string",
+			"defaultValue": "blob"
+		},
+		"adls_managed_private_endpoint_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"genomicsetldev.blob.core.windows.net"
+			]
+		},
+		"example_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/6d2e3a80-7b47-4bab-a829-b4f4e73a77f5/resourceGroups/ALLGDP/providers/Microsoft.KeyVault/vaults/genomics-etl-kv-dev-4"
+		},
+		"example_properties_groupId": {
+			"type": "string",
+			"defaultValue": "blob"
+		},
+		"keyvault_managed_private_endpoint_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/6d2e3a80-7b47-4bab-a829-b4f4e73a77f5/resourceGroups/ALLGDP/providers/Microsoft.KeyVault/vaults/genomics-etl-kv-dev-4"
+		},
+		"keyvault_managed_private_endpoint_properties_groupId": {
+			"type": "string",
+			"defaultValue": "kayvault"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "genomics-etl-2-adf-dev_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ls_adls_properties_typeProperties_serviceEndpoint": {
+						"value": "[parameters('ls_adls_properties_typeProperties_serviceEndpoint')]"
+					},
+					"ls_keyvault_properties_typeProperties_baseUrl": {
+						"value": "[parameters('ls_keyvault_properties_typeProperties_baseUrl')]"
+					},
+					"adls_managed_private_endpoint_properties_privateLinkResourceId": {
+						"value": "[parameters('adls_managed_private_endpoint_properties_privateLinkResourceId')]"
+					},
+					"adls_managed_private_endpoint_properties_groupId": {
+						"value": "[parameters('adls_managed_private_endpoint_properties_groupId')]"
+					},
+					"adls_managed_private_endpoint_properties_fqdns": {
+						"value": "[parameters('adls_managed_private_endpoint_properties_fqdns')]"
+					},
+					"example_properties_privateLinkResourceId": {
+						"value": "[parameters('example_properties_privateLinkResourceId')]"
+					},
+					"example_properties_groupId": {
+						"value": "[parameters('example_properties_groupId')]"
+					},
+					"keyvault_managed_private_endpoint_properties_privateLinkResourceId": {
+						"value": "[parameters('keyvault_managed_private_endpoint_properties_privateLinkResourceId')]"
+					},
+					"keyvault_managed_private_endpoint_properties_groupId": {
+						"value": "[parameters('keyvault_managed_private_endpoint_properties_groupId')]"
+					},
+					"ls_postgres_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('ls_postgres_properties_typeProperties_connectionString_secretName')]"
+					},
+					"ls_source_illumina_dataset_properties_typeProperties_sasUri_secretName": {
+						"value": "[parameters('ls_source_illumina_dataset_properties_typeProperties_sasUri_secretName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

@@ -1,0 +1,351 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "genomics-etl-2-adf-dev"
+		},
+		"ls_adls_properties_typeProperties_serviceEndpoint": {
+			"type": "string",
+			"defaultValue": "https://genomicsetldev.blob.core.windows.net/"
+		},
+		"ls_keyvault_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://genomics-etl-2-kv-dev-2.vault.azure.net/"
+		},
+		"adls_managed_private_endpoint_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/6d2e3a80-7b47-4bab-a829-b4f4e73a77f5/resourceGroups/ALLGDP/providers/Microsoft.Storage/storageAccounts/genomicsetldev"
+		},
+		"adls_managed_private_endpoint_properties_groupId": {
+			"type": "string",
+			"defaultValue": "blob"
+		},
+		"adls_managed_private_endpoint_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"genomicsetldev.blob.core.windows.net"
+			]
+		},
+		"example_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/6d2e3a80-7b47-4bab-a829-b4f4e73a77f5/resourceGroups/ALLGDP/providers/Microsoft.KeyVault/vaults/genomics-etl-kv-dev-4"
+		},
+		"example_properties_groupId": {
+			"type": "string",
+			"defaultValue": "blob"
+		},
+		"keyvault_managed_private_endpoint_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/6d2e3a80-7b47-4bab-a829-b4f4e73a77f5/resourceGroups/ALLGDP/providers/Microsoft.KeyVault/vaults/genomics-etl-kv-dev-4"
+		},
+		"keyvault_managed_private_endpoint_properties_groupId": {
+			"type": "string",
+			"defaultValue": "kayvault"
+		},
+		"ls_postgres_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "genomics-etl-2-postgres-admin-connection-string-dev"
+		},
+		"ls_source_illumina_dataset_properties_typeProperties_sasUri_secretName": {
+			"type": "string",
+			"defaultValue": "genomics-etl-2-illumina-dataset-sas-uri-dev"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/genomics-etl-integration-runtime-vnet-dev')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "West US 2",
+						"nodeSize": "Standard_D2_v3",
+						"numberOfNodes": 1,
+						"maxParallelExecutionsPerNode": 1
+					},
+					"ssisProperties": {
+						"edition": "Standard",
+						"licenseType": "LicenseIncluded"
+					},
+					"customerVirtualNetwork": {
+						"subnetId": "/subscriptions/6d2e3a80-7b47-4bab-a829-b4f4e73a77f5/resourceGroups/ALLGDP/providers/Microsoft.Network/virtualNetworks/genomics-etl-network-dev/subnets/genomics-etl-internal-dev"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/genomics-etl-2-managed-identity-credential')]",
+			"type": "Microsoft.DataFactory/factories/credentials",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "ManagedIdentity",
+				"typeProperties": {
+					"resourceId": "/subscriptions/6d2e3a80-7b47-4bab-a829-b4f4e73a77f5/resourcegroups/ALLGDP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/genomics-etl-2-adf-managed-identity"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/genomics-etl-adf-managed-identity-credential')]",
+			"type": "Microsoft.DataFactory/factories/credentials",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "ManagedIdentity",
+				"typeProperties": {
+					"resourceId": "/subscriptions/6d2e3a80-7b47-4bab-a829-b4f4e73a77f5/resourcegroups/ALLGDP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/genomics-etl-adf-managed-identity"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
+			"apiVersion": "2018-06-01",
+			"properties": {},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_adls')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "b",
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"serviceEndpoint": "[parameters('ls_adls_properties_typeProperties_serviceEndpoint')]",
+					"accountKind": "StorageV2",
+					"credential": {
+						"referenceName": "genomics-etl-2-managed-identity-credential",
+						"type": "CredentialReference"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/credentials/genomics-etl-2-managed-identity-credential')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_keyvault')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "a",
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('ls_keyvault_properties_typeProperties_baseUrl')]",
+					"credential": {
+						"referenceName": "genomics-etl-2-managed-identity-credential",
+						"type": "CredentialReference"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/credentials/genomics-etl-2-managed-identity-credential')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default/adls_managed_private_endpoint')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('adls_managed_private_endpoint_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('adls_managed_private_endpoint_properties_groupId')]",
+				"fqdns": "[parameters('adls_managed_private_endpoint_properties_fqdns')]"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default/example')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('example_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('example_properties_groupId')]"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default/keyvault_managed_private_endpoint')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('keyvault_managed_private_endpoint_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('keyvault_managed_private_endpoint_properties_groupId')]"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_raw_data')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_adls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "1-landing-raw-data"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_adls')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_postgres')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "a",
+				"annotations": [],
+				"type": "AzurePostgreSql",
+				"typeProperties": {
+					"connectionString": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "ls_keyvault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "[parameters('ls_postgres_properties_typeProperties_connectionString_secretName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_keyvault')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_source_illumina_dataset')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "a",
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"sasUri": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "ls_keyvault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "[parameters('ls_source_illumina_dataset_properties_typeProperties_sasUri_secretName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_keyvault')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_illumina_source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_source_illumina_dataset",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "2017-1.0",
+						"container": "dataset"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_source_illumina_dataset')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipe_import')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Importing pipeline",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "BinarySource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"deleteFilesAfterCompletion": false
+								},
+								"formatSettings": {
+									"type": "BinaryReadSettings"
+								}
+							},
+							"sink": {
+								"type": "BinarySink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_illumina_source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_raw_data",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_illumina_source')]",
+				"[concat(variables('factoryId'), '/datasets/ds_raw_data')]"
+			]
+		}
+	]
+}
