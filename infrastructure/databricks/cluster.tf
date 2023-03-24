@@ -12,7 +12,7 @@ resource "databricks_cluster" "shared_autoscaling" {
   cluster_name            = "${var.prefix}-cluster"
   spark_version           = data.databricks_spark_version.latest_genomics_runtimes.id
   node_type_id            = "Standard_DS3_v2" # data.databricks_node_type.smallest.id
-  autotermination_minutes = 20
+  autotermination_minutes = 30
   autoscale {
     min_workers = 1
     max_workers = 5
