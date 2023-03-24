@@ -1,0 +1,7 @@
+{
+	"name": "keyvault_managed_private_endpoint",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/6d2e3a80-7b47-4bab-a829-b4f4e73a77f5/resourceGroups/ALLGDP/providers/Microsoft.KeyVault/vaults/genomics-etl-kv-dev-4",
+		"groupId": "kayvault"
+	}
+}

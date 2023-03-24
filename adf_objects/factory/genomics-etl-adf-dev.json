@@ -1,0 +1,15 @@
+{
+	"name": "genomics-etl-adf-dev",
+	"location": "westus2",
+	"identity": {
+		"type": "SystemAssigned,UserAssigned",
+		"principalId": "7995c254-e3d3-4cc3-b120-1a91bee65d44",
+		"tenantId": "44d8cd30-12b4-46ab-82b4-56bec7d7a555",
+		"userAssignedIdentities": {
+			"/subscriptions/6d2e3a80-7b47-4bab-a829-b4f4e73a77f5/resourcegroups/ALLGDP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/genomics-etl-adf-managed-identity": {
+				"clientId": "e82c68e9-d3f3-494f-acb0-1c557ca7522d",
+				"principalId": "268fc00f-e421-4c80-8883-944a91927711"
+			}
+		}
+	}
+}

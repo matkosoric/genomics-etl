@@ -1,0 +1,10 @@
+{
+	"name": "adls_managed_private_endpoint",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/6d2e3a80-7b47-4bab-a829-b4f4e73a77f5/resourceGroups/ALLGDP/providers/Microsoft.Storage/storageAccounts/genomicsetldev",
+		"groupId": "blob",
+		"fqdns": [
+			"genomicsetldev.blob.core.windows.net"
+		]
+	}
+}

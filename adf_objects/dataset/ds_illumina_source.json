@@ -1,0 +1,19 @@
+{
+	"name": "ds_illumina_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_source_illumina_dataset",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "2017-1.0",
+				"container": "dataset"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,21 @@
+{
+	"name": "genomics-etl-integration-runtime-vnet-dev",
+	"properties": {
+		"type": "Managed",
+		"typeProperties": {
+			"computeProperties": {
+				"location": "West US 2",
+				"nodeSize": "Standard_D2_v3",
+				"numberOfNodes": 1,
+				"maxParallelExecutionsPerNode": 1
+			},
+			"ssisProperties": {
+				"edition": "Standard",
+				"licenseType": "LicenseIncluded"
+			},
+			"customerVirtualNetwork": {
+				"subnetId": "/subscriptions/6d2e3a80-7b47-4bab-a829-b4f4e73a77f5/resourceGroups/ALLGDP/providers/Microsoft.Network/virtualNetworks/genomics-etl-network-dev/subnets/genomics-etl-internal-dev"
+			}
+		}
+	}
+}

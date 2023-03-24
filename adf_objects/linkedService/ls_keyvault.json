@@ -1,0 +1,16 @@
+{
+	"name": "ls_keyvault",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://genomics-etl-kv-dev-4.vault.azure.net/",
+			"credential": {
+				"referenceName": "genomics-etl-adf-managed-identity-credential",
+				"type": "CredentialReference"
+			}
+		},
+		"description": "a"
+	}
+}
