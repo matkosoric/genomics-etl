@@ -1,7 +1,7 @@
 {
 	"name": "ls_postgres",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
+		"description": "a",
 		"annotations": [],
 		"type": "AzurePostgreSql",
 		"typeProperties": {
@@ -11,9 +11,9 @@
 					"referenceName": "ls_keyvault",
 					"type": "LinkedServiceReference"
 				},
-				"secretName": "genomics-etl-postgres-admin-connection-string-dev"
+				"secretName": "genomics-etl-2-postgres-admin-connection-string-dev"
 			}
-		},
-		"description": "a"
-	}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }
