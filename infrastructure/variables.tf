@@ -4,7 +4,7 @@ variable "project" {
 
 variable "region" {
   type    = string
-  default = "westus3"
+  default = "westus2"
 }
 
 variable "resource_group_name" {
