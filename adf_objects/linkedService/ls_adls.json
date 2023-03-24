@@ -1,6 +1,5 @@
 {
 	"name": "ls_adls",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"description": "b",
 		"annotations": [],
@@ -9,9 +8,10 @@
 			"serviceEndpoint": "https://genomicsetldev.blob.core.windows.net/",
 			"accountKind": "StorageV2",
 			"credential": {
-				"referenceName": "genomics-etl-adf-managed-identity-credential",
+				"referenceName": "genomics-etl-2-managed-identity-credential",
 				"type": "CredentialReference"
 			}
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }
