@@ -18,3 +18,5 @@ System components are:
 
 Databricks visualization:
 ![Bubble chart](./bubble-chart-hg19.PNG)
+
+![Bubble chart](./pipeline-executions.PNG)
