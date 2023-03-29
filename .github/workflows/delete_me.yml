@@ -1,0 +1,25 @@
+name: Delete me
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - '**'
+
+
+
+jobs:
+
+  delete_me:
+    name: Delete me
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v3
+
+      - name: Infrastructure provisioning
+        shell: bash
+        run: >
+
+          echo "DELETE ME"
