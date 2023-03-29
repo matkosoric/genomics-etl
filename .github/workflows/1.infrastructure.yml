@@ -63,7 +63,7 @@ jobs:
   cleanup_dev:
     if: false
     #if: always()
-    needs: [ infra ]
+    needs: [ infra_dev ]
     name: Infrastructure cleanup
     runs-on: ubuntu-latest
     environment: CLEAN_UP
