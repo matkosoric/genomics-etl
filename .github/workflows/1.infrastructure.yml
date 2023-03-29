@@ -10,13 +10,9 @@ on:
       - 'sql_scripts'
       - '!adf_objects/**'
 
-concurrency:
-  infra_deployment
-
 jobs:
 
-
-  infra:
+  infra_dev:
     #if: false
     name: Infrastructure provisioning
     runs-on: ubuntu-latest
@@ -27,6 +23,7 @@ jobs:
       ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
       AAD_CURRENT_USER_AAD: ${{ secrets.CURRENT_AAD_USER_ID }}
       PAT: ${{ secrets.PAT }}
+      ENVIRONMENT: "dev"
     steps:
 
       - uses: actions/checkout@v3
@@ -55,12 +52,13 @@ jobs:
           -var=illumina_dataset_sas_token="${{ secrets.ILLUMINA_SAS_TOKEN }}"
           -var=illumina_dataset_sas_uri="${{ secrets.ILLUMINA_SAS_URI }}"
           -var=databricks_admin_mail="${{ secrets.ADMIN_USER_MAIL }}"
+          -var=environment=${ENVIRONMENT}
           -auto-approve
 
           terraform output
 
 
-  cleanup:
+  cleanup_dev:
     if: false
     #if: always()
     needs: [ infra ]

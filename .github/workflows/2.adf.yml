@@ -1,0 +1,32 @@
+name: Deploy published ARM templates to PROD ADF
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - 'genomics-etl-2-adf-dev/**'
+
+jobs:
+
+  deploy_adf_to_prod:
+    #if: false
+    name: ADF deployment
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: ADF deploy
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+            az account show
+            az storage -h
+

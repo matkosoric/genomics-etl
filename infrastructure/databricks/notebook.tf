@@ -28,19 +28,24 @@ resource "databricks_notebook" "this" {
     dbutils.fs.ls("/mnt/1-landing-raw-data")
 
     # COMMAND ----------
-    path ="/mnt/1-landing-raw-data/hg19/hybrid/hg19.hybrid.vcf.gz"
-    df = spark.read.format("vcf").load(path)
+    hg19_df = spark.read.format("vcf").load("/mnt/1-landing-raw-data/hg19/hybrid/hg19.hybrid.vcf.gz")
+    hg38_df = spark.read.format("vcf").load("/mnt/1-landing-raw-data/hg38/hybrid/hg38.hybrid.vcf.gz")
 
     # COMMAND ----------
-    display(df)
+    display(hg19_df)
 
     # COMMAND ----------
-    mode = "overwrite"
-    url = "jdbc:postgresql://${var.postgres_fqdn}:5432/postgres"
-    properties = {"user": "${var.admin_username}","password": "${var.postgres_admin_password}","driver": "org.postgresql.Driver"}
+    import psycopg2
+    import pandas as pd
+    from sqlalchemy import create_engine
 
-    df.write.jdbc(url=url, table="hg19", mode=mode, properties=properties)
+    engine = create_engine("postgresql+psycopg2://${var.admin_username}:${var.postgres_admin_password}@${var.postgres_fqdn}:5432/postgres?client_encoding=utf8")
 
+    hg19_df_pandas = hg19_df.toPandas()
+    hg19_df_pandas.to_sql('hg19', engine, index=False, if_exists='replace')
+
+    hg38_df_pandas = hg38_df.toPandas()
+    hg38_df_df_pandas.to_sql('hg38', engine, index=False, if_exists='replace')
 
     EOT
   )
