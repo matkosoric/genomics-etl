@@ -8,7 +8,7 @@ Deployment pipelines are implemented in GitHub actions in accordance with
 with working CICD process between DEV and PROD environments. DEV ADF is connected to git repository, and ARM templates
 are propagated to PROD environment through GitHub action.
 
-System components are:
+### System components are:
 
 - Azure Data Factory
 - ADLS
@@ -16,7 +16,21 @@ System components are:
 - Databricks
 - KeyVault
 
+### Environment variables
 
+- ADMIN_USER_MAIL
+- AZURE_CREDENTIALS
+- CURRENT_AAD_USER_ID
+- ILLUMINA_SAS_TOKEN
+- ILLUMINA_SAS_URI
+- SERVICE_PRINCIPAL_ID
+- SERVICE_PRINCIPAL_OBJECT_ID
+- SERVICE_PRINCIPAL_SECRET
+- SUBSCRIPTION_ID
+- TENANT_ID
+
+
+### Snapshots
 
 Databricks visualization:
 ![Bubble chart](docs/bubble-chart-hg19.PNG)

@@ -18,7 +18,6 @@ jobs:
         with:
           ref: release
           path: adf_release
-          token: ${{ secrets.PAT }}
 
       - uses: actions/setup-node@v2
         with:

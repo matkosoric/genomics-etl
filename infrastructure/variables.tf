@@ -38,10 +38,6 @@ variable "current_aad_user_id" {
   type = string
 }
 
-variable "github_token" {
-  type = string
-}
-
 variable "subscription_id" {
   type = string
 }
