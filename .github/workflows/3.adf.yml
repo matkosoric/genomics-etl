@@ -1,0 +1,45 @@
+name: Deploy published ARM templates to PROD ADF
+
+on:
+  workflow_dispatch:
+    inputs:
+      adf_release:
+        description: ADF release version
+        required: false
+
+env:
+  ADF_RELEASE:                                  ${{ github.event.inputs.adf_release }}
+
+jobs:
+
+  deploy_adf_to_prod:
+    name: ADF deployment to PROD environment
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.adf_release }}
+          token: ${{ secrets.PAT }}
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: ADF deploy
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+
+            source 0.configuration.sh
+
+            az deployment group create \
+              --resource-group "${PROD_ADF_RESOURCE_GROUP}" \
+              --name "${PROD_ADF_DEPLOYMENT_NAME}" \
+              --template-uri "${TEMPLATE_URI}" \
+              --parameters factoryName="${PROD_TARGET_FACTORY_NAME}" \
+              --parameters ls_keyvault_properties_typeProperties_baseUrl="${PROD_KEYVAULT_URL}" \
+              --parameters ls_postgres_properties_typeProperties_connectionString_secretName="${PROD_POSTGRES_CONNECTION_STRING_SECRET_NAME}" \
+              --parameters ls_source_illumina_dataset_properties_typeProperties_sasUri_secretName="${ILLUMINA_DATASET_SAS_URI_SECRET_NAME}"

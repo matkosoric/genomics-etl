@@ -1,0 +1,45 @@
+name: Release pipeline
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - 'genomics-etl-2-adf-dev/**'
+
+jobs:
+
+  deploy_adf_to_prod:
+    name: Create ADF release
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v3
+        with:
+          ref: release
+          path: adf_release
+          token: ${{ secrets.PAT }}
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - uses: actions/setup-python@v2
+
+      - name: Run command
+        shell: bash
+        run: >-
+
+          cd adf_release
+
+          # DEBUG=semantic-release*
+
+          git fetch --prune --prune-tags
+
+          git config --global http.sslVerify false
+
+          git fetch --tags -f
+
+          npm ci
+
+          npx semantic-release
