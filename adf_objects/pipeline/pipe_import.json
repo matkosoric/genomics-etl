@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Importing pipeline",
+				"name": "Import to ADLS",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -46,6 +46,33 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Push to database",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Import to ADLS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/c0533753-2a6c-44b2-8d6a-e3b84fd148a8/Genomics-ETL"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_databricks",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"annotations": []
