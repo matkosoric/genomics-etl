@@ -26,7 +26,7 @@ ADF view:
 
 ![Azure Data Factory pipelines](docs/pipeline.PNG)
 
-CICD:
+CICD:  
 ![ADF CICD](docs/adf-cicd.png)
 
 Postgres:
