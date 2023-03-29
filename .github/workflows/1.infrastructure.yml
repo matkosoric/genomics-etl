@@ -10,6 +10,7 @@ on:
       - 'sql_scripts'
       - '!adf_objects/**'
 
+
 jobs:
 
   infra_dev:
