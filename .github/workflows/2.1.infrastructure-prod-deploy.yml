@@ -34,6 +34,8 @@ jobs:
           cd infrastructure
 
           terraform init
+          -backend-config="container_name=genomics-etl-2-terraform-state-prod"
+          -backend-config="resource_group_name=ALLGDP"
 
           terraform apply
           -var=tenant_id=${ARM_TENANT_ID}
