@@ -17,6 +17,11 @@ System components are:
 
 
 Databricks visualization:
-![Bubble chart](./bubble-chart-hg19.PNG)
+![Bubble chart](docs/bubble-chart-hg19.PNG)
 
-![Bubble chart](./pipeline-executions.PNG)
+ADF view:
+![Azure Data Factory](docs/pipeline-executions.PNG)
+
+Postgres:
+![Data in postgres](docs/data-in-postgres.PNG)
+
