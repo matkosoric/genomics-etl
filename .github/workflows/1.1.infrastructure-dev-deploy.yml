@@ -61,6 +61,7 @@ jobs:
 
 
   terraform_documentation:
+    needs: infra_dev
     name: 'Terraform Documentation'
     runs-on: ubuntu-latest
     steps:

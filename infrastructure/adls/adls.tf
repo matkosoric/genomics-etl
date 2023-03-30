@@ -15,7 +15,7 @@ resource "azurerm_storage_account" "genomics_etl_data" {
   }
 
   identity {
-    type         = "SystemAssigned, UserAssigned"
+    type         = "UserAssigned" # SystemAssigned,
     identity_ids = [var.adf_user_assigned_managed_identity_id]
   }
 }
