@@ -70,8 +70,6 @@ jobs:
 
       - name: 'Terraform Docs'
         uses: terraform-docs/gh-actions@v1.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
         with:
           working-dir: 'infrastructure'
           output-file: README.md
