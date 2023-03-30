@@ -61,3 +61,7 @@ variable "admin_username" {
 variable "postgres_admin_password" {
   type = string
 }
+
+variable "environment" {
+  type = string
+}

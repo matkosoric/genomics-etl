@@ -1,6 +1,6 @@
 
 resource "azurerm_databricks_workspace" "db_workspace" {
-  name                        = "${var.prefix}-workspace"
+  name                        = "${var.prefix}-workspace-${var.environment}"
   resource_group_name         = var.resource_group
   location                    = var.region
   sku                         = "premium"

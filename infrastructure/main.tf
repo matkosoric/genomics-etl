@@ -17,7 +17,7 @@ module "postgres" {
   source              = "./postgres"
   location            = var.location
   resource_group_name = var.resource_group_name
-  admin_username      = "genomicsetladmin"
+  admin_username      = local.postgres_admin_username
   project             = local.project
   environment         = local.environment
 }
@@ -65,6 +65,7 @@ module "databricks" {
   postgres_fqdn                   = module.postgres.postgres_fqdn
   admin_username                  = module.postgres.admin_username
   postgres_admin_password         = module.postgres.postgres_admin_password
+  environment                     = var.environment
 }
 
 
