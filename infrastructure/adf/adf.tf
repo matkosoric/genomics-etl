@@ -26,7 +26,7 @@ resource "azurerm_data_factory_managed_private_endpoint" "adls_managed_private_e
 
 resource "azurerm_user_assigned_identity" "adf_managed_identity" {
   location            = var.location
-  name                = "${var.project}-adf-managed-identity"
+  name                = "${var.project}-adf-managed-identity-${var.environment}"
   resource_group_name = var.resource_group_name
 }
 

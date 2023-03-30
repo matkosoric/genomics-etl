@@ -50,5 +50,7 @@ Postgres:
 
 
 TODO:
-* Automatic release process on *adf_publish* branch with its own release
-* Manual release process with semantic versioning as parameter (major, minor & patch bump)
+* Automatic release process on *adf_publish* branch with push to master branch and automatic patch bump
+* Manual release process with semantic version parameter (major, minor or patch) and commit SHA for release
+* Connect DEV ADF with GIT in Terraform code
+* Infra cleanup
