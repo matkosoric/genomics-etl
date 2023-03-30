@@ -50,5 +50,5 @@ Postgres:
 
 
 TODO:
-* Automatic release process on *adf_publish* branch with its own release
-* Manual release process with semantic versioning as parameter (major, minor & patch bump)
+* Automatic release pipeline on *adf_publish* branch with its own release and patch commit to master branch
+* Manual release process with semantic versioning parameter (major, minor or patch) and commit SHA as release source
