@@ -54,3 +54,4 @@ TODO:
 * Manual release process with semantic version parameter (major, minor or patch) and commit SHA for release
 * Connect DEV ADF with GIT in Terraform code
 * Infra cleanup
+* Terraform docs push readme back to repo
