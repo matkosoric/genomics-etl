@@ -28,7 +28,7 @@ are propagated to PROD environment through GitHub action.
 - SERVICE_PRINCIPAL_SECRET
 - SUBSCRIPTION_ID
 - TENANT_ID
-
+- PAT
 
 ### Snapshots
 
