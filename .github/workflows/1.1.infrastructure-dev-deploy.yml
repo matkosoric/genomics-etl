@@ -74,4 +74,10 @@ jobs:
           working-dir: 'infrastructure'
           output-file: README.md
           output-method: replace
-          git-push: "true"
+          git-push: "false"
+
+      - name: Infrastructure provisioning
+        shell: bash
+        run: >
+
+          cat "${GITHUB_WORKSPACE}/infrastructure/README.md"
