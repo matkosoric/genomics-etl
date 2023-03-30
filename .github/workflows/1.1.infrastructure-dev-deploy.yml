@@ -1,4 +1,4 @@
-name: Azure infrastructure provisioning - DEV
+name: 1.1 Azure infra deploy - DEV
 
 on:
   push:

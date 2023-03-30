@@ -1,4 +1,4 @@
-name: Azure infrastructure decommissioning - DEV
+name: 1.2 Azure infra destroy - DEV
 
 on:
   workflow_dispatch

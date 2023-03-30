@@ -1,4 +1,4 @@
-name: Deploy published ARM templates to PROD ADF
+name: 3. Deploy ADF to PROD
 
 on:
   workflow_dispatch:

@@ -1,4 +1,4 @@
-name: Azure infrastructure provisioning - PROD
+name: 2.1 Azure infra deploy - PROD
 
 on:
   workflow_dispatch

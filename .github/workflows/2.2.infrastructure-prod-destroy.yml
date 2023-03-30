@@ -1,4 +1,4 @@
-name: Azure infrastructure decommissioning - PROD
+name: 2.2 Azure infra deploy - PROD
 
 on:
   workflow_dispatch
