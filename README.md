@@ -46,3 +46,9 @@ CICD:
 Postgres:
 ![Data in postgres](docs/data-in-postgres.PNG)
 
+
+
+
+TODO:
+* Automatic release process on *adf_publish* branch with its own release
+* Manual release process with semantic versioning as parameter (major, minor & patch bump)
