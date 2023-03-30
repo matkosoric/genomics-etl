@@ -57,3 +57,5 @@ jobs:
           -auto-approve
 
           terraform output
+
+          terraform docs
