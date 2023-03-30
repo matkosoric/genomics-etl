@@ -1,4 +1,4 @@
-name: 2.2 Azure infra deploy - PROD
+name: 2.2 Azure infra destroy - PROD
 
 on:
   workflow_dispatch
